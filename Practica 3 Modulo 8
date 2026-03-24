@@ -1,0 +1,44 @@
+Practica 3 Modulo 8
+sudo apt install docker-compose-v2 -y
+mkdir ~/practica_wordpress
+cd ~/practica_wordpress
+nano docker-compose.yml
+
+Pega la configuracion:
+version: '3.3'
+
+services:
+  db:
+    image: mysql:8.0
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: rootpassword
+      MYSQL_DATABASE: wordpress_db
+      MYSQL_USER: wp_user
+      MYSQL_PASSWORD: wp_password
+    volumes:
+      - db_data:/var/lib/mysql
+
+  wordpress:
+    depends_on:
+      - db
+    image: wordpress:latest
+    restart: always
+    ports:
+      - "8080:80"
+    environment:
+      WORDPRESS_DB_HOST: db:3306
+      WORDPRESS_DB_USER: wp_user
+      WORDPRESS_DB_PASSWORD: wp_password
+      WORDPRESS_DB_NAME: wordpress_db
+
+volumes:
+  db_data:
+Guarda con Ctrl+O, presiona Enter, y sal con Ctrl+X.
+
+Desplegar los contenedores: sudo docker compose up -d
+Una vez termine en la terminal, abre tu navegador y entra a http://127.0.0.1:8080.
+Verás la pantalla de instalación de WordPress. Simplemente elige el idioma, ponle un título a tu sitio, crea tu usuario administrador de WordPress y ¡listo!
+
+SI FALLA: usa: sudo docker compose restart wordpress (Reinicia los servicios para que sql y wordpress se pongan de acuerdo)
+sudo docker compose logs db (verifica que todo este bien)
