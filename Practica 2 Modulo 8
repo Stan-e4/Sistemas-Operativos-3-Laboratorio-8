@@ -1,0 +1,21 @@
+Practica 2 Modulo 8
+sudo docker volume create portainer_data
+
+sudo docker run -d -p 8000:8000 -p 9443:9443 --name portainer \
+    --restart=always \
+    -v /var/run/docker.sock:/var/run/docker.sock \
+    -v portainer_data:/data \
+    portainer/portainer-ce:latest
+Ve a tu navegador e ingresa a https://127.0.0.1:9443
+Crea tu usuario y contraseña de administrador.
+
+Al entrar, selecciona la opción "Get Started" (Local Environment). Portainer detectará automáticamente tu Docker Engine gracias al archivo docker.sock que le pasamos.
+Detener NGINX desde Portainer:
+
+En el menú izquierdo de Portainer, haz clic en "Containers".
+
+Verás tu contenedor llamado mi_nginx y el de portainer.
+
+Marca la casilla junto a mi_nginx y haz clic en el botón "Stop" arriba.
+
+Vuelve a la pestaña donde tenías http://127.0.0.1:8888 y recarga la página. Dará error de conexión, demostrando que el contenedor se detuvo con éxito.
