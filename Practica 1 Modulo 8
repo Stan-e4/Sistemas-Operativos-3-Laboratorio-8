@@ -1,0 +1,14 @@
+Practica 1 Modulo 8 Instalacion y configuracion de Docker
+ssh root@IP_DE_TU_DROPLET
+sudo apt update
+sudo apt install docker.io -y
+sudo systemctl enable --now docker
+sudo mkdir -p /home/website
+echo "<h1>Hola, soy Starlin de la Cruz Alonzo - Matricula: [2025-2247]</h1>" | sudo tee /home/website/index.html
+sudo docker run -d --name mi_nginx -p 8888:80 -v /home/website:/usr/share/nginx/html nginx
+Abre tu navegador web y entra a http://127.0.0.1:8888. Deberías ver la página en blanco con tu nombre y matrícula. Toma captura de esto para tu práctica.
+docker ps
+docker stop (ID)
+docker start (ID) 
+************************************************************************
+
