@@ -12,10 +12,10 @@ services:
     image: mysql:8.0
     restart: always
     environment:
-      MYSQL_ROOT_PASSWORD: rootpassword
+      MYSQL_ROOT_PASSWORD: teletubies123
       MYSQL_DATABASE: wordpress_db
       MYSQL_USER: wp_user
-      MYSQL_PASSWORD: wp_password
+      MYSQL_PASSWORD: teletubies123
     volumes:
       - db_data:/var/lib/mysql
 
@@ -25,7 +25,7 @@ services:
     image: wordpress:latest
     restart: always
     ports:
-      - "8080:80"
+      - "8888:80"
     environment:
       WORDPRESS_DB_HOST: db:3306
       WORDPRESS_DB_USER: wp_user
@@ -37,8 +37,14 @@ volumes:
 Guarda con Ctrl+O, presiona Enter, y sal con Ctrl+X.
 
 Desplegar los contenedores: sudo docker compose up -d
-Una vez termine en la terminal, abre tu navegador y entra a http://127.0.0.1:8080.
+Una vez termine en la terminal, abre tu navegador y entra a http://127.0.0.1:80.
 Verás la pantalla de instalación de WordPress. Simplemente elige el idioma, ponle un título a tu sitio, crea tu usuario administrador de WordPress y ¡listo!
 
 SI FALLA: usa: sudo docker compose restart wordpress (Reinicia los servicios para que sql y wordpress se pongan de acuerdo)
 sudo docker compose logs db (verifica que todo este bien)
+*****************************************************************************************
+posibles errores:
+Problema,Causa probable,Solución rápida
+Error estableciendo conexión con la DB,El contenedor de MySQL tarda más en arrancar que el de WordPress.,sudo docker compose restart wordpress (espera 30 segundos primero).
+Puerto 8888 ocupado,Tienes el contenedor de Nginx de la práctica anterior corriendo.,sudo docker stop mi_nginx antes de subir el compose.
+No carga la IP en el navegador,Firewall de DigitalOcean bloqueando el puerto 8888.,Ve al panel de DO -> Networking -> Firewall y añade una regla Inbound para TCP 8888.
